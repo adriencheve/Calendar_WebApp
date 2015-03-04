@@ -1,0 +1,42 @@
+
+
+
+// --------------
+//  Assignment 1
+// --------------
+
+ - database with at least 2 tables
+     = recommends you have as many tables as team members
+     = user/login table doesn't count
+ - some data from rich XML data structure // not sure what this means
+     = can be stored as XML files, or in a database
+ - should have 4 use cases
+     = 3 user based, must provice different perspective on data manipulation
+     = 1 admin based, for changing data
+ - should be at least 4 views, including main
+
+// --------------
+//  Assignment 2
+// --------------
+
+ - project must have the develop and master branch format
+ - must supply database script
+ - should be at least 4 controllers, one for each use case
+ - should have a model for each table
+ - each model should have CRUD and not CRUD methods
+ - use cases should be 2 levels deep
+     = main page is the origin
+     = from main goes to a page, then from that page to something else
+     = main -> page -> page
+         ~ for three use cases
+ - the admin page(s) should provide maintenance for the control data
+     = adding, editing, deleting
+     = ui should make this easy to do
+ - should have an image uploading aspect
+ - anything a user can do, the admin can do for everyone
+ - rich text editor must be somewhere, probably using a widget
+     = such as ckeditor or tinymce
+
+// --------------
+//  Assignment 3
+// --------------
