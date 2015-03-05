@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2015 at 01:31 AM
+-- Generation Time: Mar 05, 2015 at 01:34 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -19,6 +19,24 @@ SET time_zone = "+00:00";
 --
 -- Database: `calendar4711`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'id of user who created event',
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `image` varchar(127) COLLATE utf8_bin DEFAULT 'placeholder.jpg',
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `created` date NOT NULL COMMENT 'date event created',
+  `modified` date NOT NULL COMMENT 'date event last modified',
+  `description` text COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -39,6 +57,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+ ADD PRIMARY KEY (`id`), ADD FULLTEXT KEY `description` (`description`), ADD FULLTEXT KEY `description_2` (`description`);
 
 --
 -- Indexes for table `users`
