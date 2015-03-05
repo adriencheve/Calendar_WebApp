@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2015 at 09:59 PM
+-- Generation Time: Mar 05, 2015 at 01:34 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `events` (
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `userid` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `admin` tinyint(1) DEFAULT '0',
   `username` varchar(32) COLLATE utf8_bin NOT NULL,
   `fname` varchar(32) COLLATE utf8_bin NOT NULL,
   `lname` varchar(32) COLLATE utf8_bin NOT NULL,
@@ -61,13 +62,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD FULLTEXT KEY `description` (`description`), ADD FULLTEXT KEY `description_2` (`description`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`userid`);
+ ADD PRIMARY KEY (`user_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
