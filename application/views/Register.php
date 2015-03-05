@@ -1,25 +1,27 @@
-<h2>Register</h2>
-
 
 <div id="container">
-<?php echo form_open('register/validation'); ?>
 
-<h1>Create Form Using CodeIgniter</h1>
+<form method="post">  <!-- missing the action="??" part -->
 
-<?php echo form_label('User Name :'); ?>
-<?php echo form_input(array('id' => 'uname', 'name' => 'uname')); ?>
-<br>
-<?php echo form_label('E-mail :'); ?>
-<?php echo form_input(array('id' => 'email', 'name' => 'email')); ?>
-<br>
-<?php echo form_label('Password:'); ?>
-<?php echo form_input(array('id' => 'pass1', 'name' => 'pass1')); ?>
-<br>
-<?php echo form_label('Confirm Password:'); ?>
-<?php echo form_input(array('id' => 'pass2', 'name' => 'pass2')); ?>
+    <legend> Register Form </legend>
 
-<br>
-<?php echo form_submit(array('id' => 'submit', 'value' => 'Submit')); ?>
+    <fieldset>
+        User Name: 
+        <input type="text" name="username">
+        <br>
 
-<?php echo form_close(); ?>
+        Email:
+        <input type="email" name="email">
+        <br>
+        
+        Password:
+        <input type="password" name="password1">
+        <br>
+        
+        Confirm Password:
+        <input type="password" name="password2">
+        <br>
+
+        <input type="submit" value="Login">
+    </fieldset>
 </div>
