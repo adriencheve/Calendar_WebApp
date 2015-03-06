@@ -24,20 +24,21 @@ class Login extends Application
     {
         $record = array();
 
-        $record['username'] = set_value('uname');
-        $record['password'] = set_value('pass');
+        $record['username'] = set_value('username');
+        $record['password'] = set_value('password');
 
         $record = $this->users->login($record);
+
         if($record != NULL)
         {
             $name = $record->fname . ' ' . $record->lname;
 
-            $this->load->view('success_login', array('flname' => $name));
-            $this->load->view('calendar');
+            //$this->load->view('success_login', array('flname' => $name));
+            $this->load->view('monthly', 0);
         }
         else
         {
-            $this->load->view('error');
+            redirect('register');
         }
     }
 }
