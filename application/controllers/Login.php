@@ -33,8 +33,8 @@ class Login extends Application
         {
             $name = $record->fname . ' ' . $record->lname;
 
-            $this->load->view('success_login', array('flname' => $name));
-            $this->load->view('calendar - monthlyview');
+            //$this->load->view('success_login', array('flname' => $name));
+            $this->load->view('monthly', 0);
         }
         else
         {
