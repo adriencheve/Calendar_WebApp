@@ -19,8 +19,7 @@ class Application extends CI_Controller {
      * Establish view parameters & load common helpers
      */
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->data = array();
         $this->data['title'] = 'Calendar App';    // our default title
