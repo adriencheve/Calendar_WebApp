@@ -38,15 +38,22 @@
     <button type="button" onclick="alert('PrevMonth')">
             Previous
     </button>
-    <p> January 2015 </p>
+    <p> {month} </p>
     <button type="button" onclick="alert('NextMonth')">
             Next
     </button>
     <table align="center" border=1 cellpadding=2>
         <tr>
-            <th>Sun <th>Mon <th>Tue <th>Wed <th>Thu <th>Fri <th>Sat
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
         </tr>
-        <tr>
+        {table}
+        <!-- <tr>
             <td> <td> <td> <td> 
 	    <td onclick="alert('Example Event')">1</br>Example</br> Event</td>
 	    <td>2 <td>3
@@ -62,7 +69,7 @@
         </tr>
         <tr>
             <td>25 <td>26 <td>27 <td>28 <td>29 <td>30 <td>
-        </tr>
+        </tr> -->
     </table>
 </body>
 </html>

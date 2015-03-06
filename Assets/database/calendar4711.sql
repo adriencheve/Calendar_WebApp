@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
- ADD PRIMARY KEY (`id`), ADD FULLTEXT KEY `description` (`description`), ADD FULLTEXT KEY `description_2` (`description`);
+ ADD PRIMARY KEY (`id`), ADD FULLTEXT KEY `description` (`description`);
 
 --
 -- Indexes for table `users`
