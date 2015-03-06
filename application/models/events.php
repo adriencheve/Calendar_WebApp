@@ -9,11 +9,11 @@ class Events extends MY_Model
         parent::__construct('events', 'id');
     }
 
-	public function create_event($record)
+	public function add_event($record)
 	{
 		$record->id = $this->highest() + 1;
-		$record->created = time();
-		$record->modified = time();
+		$record->created = date('Y-m-d');
+		$record->modified = date('Y-m-d');
 
 		$this->add($record);
 	}
