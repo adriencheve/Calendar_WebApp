@@ -52,7 +52,21 @@
             <th>Fri</th>
             <th>Sat</th>
         </tr>
-        {table}
+        <tr>
+            {weekOne}
+        </tr>
+        <tr>
+            {weekTwo}
+        </tr>
+        <tr>
+            {weekThree}
+        </tr>
+        <tr>
+            {weekFour}
+        </tr>
+        <tr>
+            {weekFive}
+        </tr>
         <!-- <tr>
             <td> <td> <td> <td> 
 	    <td onclick="alert('Example Event')">1</br>Example</br> Event</td>
