@@ -20,7 +20,7 @@ class Search extends Application {
 		$record['date'] = set_value('eventDate');
 		
 		
-		$raw_results = mysql_query("
+		$raw_results = $this->db->query("
 		SELECT * 
 		FROM events 
 		WHERE ('name' LIKE '%".$record['name']."%') 
@@ -32,11 +32,11 @@ class Search extends Application {
 		
 		if(mysql_num_rows($raw_results) > 0)
 		{
-			//do  
+			//do something 
 		}
 		else
 		{
-			//no results found
+			//do something else
 		}
 	}
 }
