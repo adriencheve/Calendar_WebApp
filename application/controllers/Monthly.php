@@ -1,19 +1,26 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Monthly extends Application {
+class Monthly extends Application
+{
+    function __construct()
+    {
+        parent::__construct();
+    }
 
 	public function index($id)
 	{
         $this->data['title'] = "Calendar - Monthly";
 		$this->data['pagebody'] = 'monthly';
 
-        generateCalendar($id);
+        $this->generateCalendar($id);
 	}
 
-    public function generateCalendar($id)
+    private function generateCalendar($id)
     {
-        $openCell = false;
+
+        $foo = 0;
+        $openCell = true;
         $openList = false;
         $weekOne = "";
         $weekTwo = "";
@@ -21,288 +28,198 @@ class Monthly extends Application {
         $weekFour = "";
         $weekFive = "";
 
-        if ($id == 0)
-            $events = $this->events->all();
-        else
-            $events = $this->events->some("user_id", $id);
+        $days = 1;
 
-        // ----------
-        //  Week One
-        // ----------
+        $this->data['month'] = "January";
 
-        ksort($events, "start_date"); // sort the events by date
-        $date = date("d");
-        $eDay = 1; // number day of the next event
-        $bDay = 1; // number day of the box being filled
+        $events = $this->events->events_date_order($id);
 
-        for ($index = 0; $index < count($events); ) // do not increment index automatically
+        if (count($events) < 1)
         {
-            if (($eDay > 7) || ($bDay > 7)) break; // calendar is 7 x 5 boxes
-            if ($eDay > $bDay) // if the event isn't in this box, skip this box
-            {
-                $bDay++;
-                $weekOne = $weekOne . "<td></td>";
-                continue;
-            }
-
-            if ($event->start_date != $date) // multiple events on the same day
-            {
-                if ($openList == true)
-                {
-                    $weekOne = $weekOne . "</ul>";
-                    $openList = false;
-                }
-                if ($openCell == true)
-                {
-                    $weekOne = $weekOne . "</td>";
-                    $openCell = false;
-                }
-
-                $date = $events[$index]->start_date;
-                $eDay = date("d", strtotime($date));
-                $bDay++;
-                continue;
-            }
-
-            if ($openCell == false)
-            {
-                $weekOne = $weekOne . "<td>"
-                $openCell = true;
-            }
-            if ($openList == false)
-            {
-                $weekOne = $weekOne . "<ul>"
-                $openList = true;
-            }
-
-            $weekOne = $weekOne . "<li>" . $events[$index]->name . "</li>";
-            $index++;
+            $this->fillWeeks(1);
+            $this->render();
+            return 0;
         }
-        if ($openCell == true)
-            $weekOne = $weekOne . "</td>";
 
-        // ----------
-        //  Week Two
-        // ----------
+        $p = array
+        (
+            "week" => "weekOne",
+            "openCell" => true,
+            "openList" => false,
+            "test" => 0,
+            "eDay" => 1,
+            "bDay" => 1,
+            "eDayMax" => 7,
+            "bDayMax" => 7,
+            "index" => 0
+        );
 
-        $openCell = false;
-        $openList = false;
-        $eDay = 8; // number day of the next event
-        $bDay = 8; // number day of the box being filled
+        $this->generateWeek($p, $events);
 
-        for ($index < count($events); ) // do not increment index automatically
+        if ($p['index'] >= count($events))
         {
-            if (($eDay > 14) || ($bDay > 14)) break; // calendar is 7 x 5 boxes
-            if ($eDay > $bDay) // if the event isn't in this box, skip this box
-            {
-                $bDay++;
-                $weekTwo = $weekTwo . "<td></td>";
-                continue;
-            }
-
-            if ($event->start_date != $date) // multiple events on the same day
-            {
-                if ($openList == true)
-                {
-                    $weekTwo = $weekTwo . "</ul>";
-                    $openList = false;
-                }
-                if ($openCell == true)
-                {
-                    $weekTwo = $weekTwo . "</td>";
-                    $openCell = false;
-                }
-
-                $date = $events[$index]->start_date;
-                $eDay = date("d", strtotime($date));
-                $bDay++;
-                continue;
-            }
-
-            if ($openCell == false)
-            {
-                $weekTwo = $weekTwo . "<td>"
-                $openCell = true;
-            }
-            if ($openList == false)
-            {
-                $weekTwo = $weekTwo . "<ul>"
-                $openList = true;
-            }
-
-            $weekTwo = $weekTwo . "<li>" . $events[$index]->name . "</li>";
-            $index++;
+            $this->fillWeeks(2);
+            $this->render();
+            return 0;
         }
-        if ($openCell == true)
-            $weekTwo = $weekTwo . "</td>";
 
-        // ------------
-        //  Week Three
-        // ------------
+        $p['week'] = "weekTwo";
+        $p['openCell'] = false;
+        $p['openList'] = false;
+        $p['eDay'] = 8;
+        $p['bDay'] = 8;
+        $p['eDayMax'] = 14;
+        $p['bDayMax'] = 14;
 
-        $openCell = false;
-        $openList = false;
-        $eDay = 15; // number day of the next event
-        $bDay = 15; // number day of the box being filled
+        $this->generateWeek($p, $events);
 
-        for ($index < count($events); ) // do not increment index automatically
+        if ($p['index'] >= count($events))
         {
-            if (($eDay > 21) || ($bDay > 21)) break; // calendar is 7 x 5 boxes
-            if ($eDay > $bDay) // if the event isn't in this box, skip this box
-            {
-                $bDay++;
-                $weekThree = $weekThree . "<td></td>";
-                continue;
-            }
-
-            if ($event->start_date != $date) // multiple events on the same day
-            {
-                if ($openList == true)
-                {
-                    $weekThree = $weekThree . "</ul>";
-                    $openList = false;
-                }
-                if ($openCell == true)
-                {
-                    $weekThree = $weekThree . "</td>";
-                    $openCell = false;
-                }
-
-                $date = $events[$index]->start_date;
-                $eDay = date("d", strtotime($date));
-                $bDay++;
-                continue;
-            }
-
-            if ($openCell == false)
-            {
-                $weekThree = $weekThree . "<td>"
-                $openCell = true;
-            }
-            if ($openList == false)
-            {
-                $weekThree = $weekThree . "<ul>"
-                $openList = true;
-            }
-
-            $weekThree = $weekThree . "<li>" . $events[$index]->name . "</li>";
-            $index++;
+            $this->fillWeeks(3);
+            $this->render();
+            return 0;
         }
-        if ($openCell == true)
-            $weekThree = $weekThree . "</td>";
 
-        // -----------
-        //  Week Four
-        // -----------
+        $p['week'] = "weekThree";
+        $p['openCell'] = false;
+        $p['openList'] = false;
+        $p['eDay'] = 15;
+        $p['bDay'] = 15;
+        $p['eDayMax'] = 21;
+        $p['bDayMax'] = 21;
 
-        $openCell = false;
-        $openList = false;
-        $eDay = 22; // number day of the next event
-        $bDay = 22; // number day of the box being filled
+        $this->generateWeek($p, $events);
 
-        for ($index < count($events); ) // do not increment index automatically
+        if ($p['index'] >= count($events))
         {
-            if (($eDay > 28) || ($bDay > 28)) break; // calendar is 7 x 5 boxes
-            if ($eDay > $bDay) // if the event isn't in this box, skip this box
-            {
-                $bDay++;
-                $weekFour = $weekFour . "<td></td>";
-                continue;
-            }
-
-            if ($event->start_date != $date) // multiple events on the same day
-            {
-                if ($openList == true)
-                {
-                    $weekFour = $weekFour . "</ul>";
-                    $openList = false;
-                }
-                if ($openCell == true)
-                {
-                    $weekFour = $weekFour . "</td>";
-                    $openCell = false;
-                }
-
-                $date = $events[$index]->start_date;
-                $eDay = date("d", strtotime($date));
-                $bDay++;
-                continue;
-            }
-
-            if ($openCell == false)
-            {
-                $weekFour = $weekFour . "<td>"
-                $openCell = true;
-            }
-            if ($openList == false)
-            {
-                $weekFour = $weekFour . "<ul>"
-                $openList = true;
-            }
-
-            $weekFour = $weekFour . "<li>" . $events[$index]->name . "</li>";
-            $index++;
+            $this->fillWeeks(4);
+            $this->render();
+            return 0;
         }
-        if ($openCell == true)
-            $weekFour = $weekFour . "</td>";
 
-        // -----------
-        //  Week Five
-        // -----------
+        $p['week'] = "weekFour";
+        $p['openCell'] = false;
+        $p['openList'] = false;
+        $p['eDay'] = 22;
+        $p['bDay'] = 22;
+        $p['eDayMax'] = 28;
+        $p['bDayMax'] = 28;
 
-        $openCell = false;
-        $openList = false;
-        $eDay = 29; // number day of the next event
-        $bDay = 29; // number day of the box being filled
+        $this->generateWeek($p, $events);
 
-        for ($index < count($events); ) // do not increment index automatically
+        if ($p['index'] >= count($events))
         {
-            if (($eDay > 35) || ($bDay > 35)) break; // calendar is 7 x 5 boxes
-            if ($eDay > $bDay) // if the event isn't in this box, skip this box
-            {
-                $bDay++;
-                $weekFive = $weekFive . "<td></td>";
-                continue;
-            }
-
-            if ($event->start_date != $date) // multiple events on the same day
-            {
-                if ($openList == true)
-                {
-                    $weekFive = $weekFive . "</ul>";
-                    $openList = false;
-                }
-                if ($openCell == true)
-                {
-                    $weekFive = $weekFive . "</td>";
-                    $openCell = false;
-                }
-
-                $date = $events[$index]->start_date;
-                $eDay = date("d", strtotime($date));
-                $bDay++;
-                continue;
-            }
-
-            if ($openCell == false)
-            {
-                $weekFive = $weekFive . "<td>"
-                $openCell = true;
-            }
-            if ($openList == false)
-            {
-                $weekFive = $weekFive . "<ul>"
-                $openList = true;
-            }
-
-            $weekFive = $weekFive . "<li>" . $events[$index]->name . "</li>";
-            $index++;
+            $this->fillWeeks(5);
+            $this->render();
+            return 0;
         }
-        if ($openCell == true)
-            $weekFive = $weekFive . "</td>";
 
-        // replace the templates in the view with weekOne - weekFive
+        $p['week'] = "weekFive";
+        $p['openCell'] = false;
+        $p['openList'] = false;
+        $p['eDay'] = 29;
+        $p['bDay'] = 29;
+        $p['eDayMax'] = 35;
+        $p['bDayMax'] = 35;
+
+        $this->generateWeek($p, $events);
 
         $this->render();
+    }
+
+    private function generateWeek($p, $events)
+    {
+        $week = "";
+        $date = date("ymd");
+        $days = 1;
+        $var = 0;
+
+        while ($p['index'] < count($events)) // do not increment index automatically
+        {
+            if (($p['eDay'] > $p['eDayMax']) || ($p['bDay'] > $p['eDayMax'])) break; // calendar is 7 x 5 boxes
+            if ($p['eDay'] > $p['bDay']) // if the event isn't in this box, skip this box
+            {
+                $p['bDay']++;
+                if ($p['openCell'] == true)
+                {
+                    $week = $week . "</td>";
+                    $p['openCell'] = false;
+                }
+                else $week = $week . "<td></td>";
+
+                $days++;
+                $var++;
+                var_dump($var);
+                continue;
+            }
+            else if ($p['bDay'] > $p['eDay']) break;
+
+            if (date("ymd", strtotime($events[$p['index']]->start_date)) != date("ymd", strtotime($date))) // multiple events on the same day
+            {
+                if ($p['openList'] == true)
+                {
+                    $week = $week . "</ul>";
+                    $p['openList'] = false;
+                }
+                if ($p['openCell'] == true)
+                {
+                    $week = $week . "</td>";
+                    $p['openCell'] = false;
+                }
+
+                $date = $events[$p['index']]->start_date;
+                $p['eDay'] = (int)date("d", strtotime($date));
+                $p['bDay']++;
+
+                continue;
+            }
+
+            if ($p['openCell'] == false)
+            {
+                $week = $week . "<td>";
+                $p['openCell'] = true;
+            }
+            if ($p['openList'] == false)
+            {
+                $week = $week . "<ul>";
+                $p['openList'] = true;
+            }
+
+            $week = $week . "<li>" . $events[$p['index']]->name . "</li>";
+            $p['index']++;
+            $days++;
+        }
+
+        if ($p['openCell'] == true)
+            $week = $week . "</td>";
+
+        while ($days < 7)
+        {
+            $week = $week . "<td></td>";
+            $days++;
+        }
+
+        $this->data[$p['week']] = $week;
+
+        //var_dump($p);
+        var_dump("<br>");
+    }
+
+    private function fillWeeks($weekNum)
+    {
+        switch($weekNum)
+        {
+            case 1:
+                $this->data['weekOne'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+            case 2:
+                $this->data['weekTwo'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+            case 3:
+                $this->data['weekThree'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+            case 4:
+                $this->data['weekFour'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+            case 5:
+                $this->data['weekFive'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+                break;
+        }
     }
 }
