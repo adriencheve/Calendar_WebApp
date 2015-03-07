@@ -6,7 +6,7 @@
  * @programmer Julian Brandrick
  * @designer James Parry
  */
-class CreateEvent extends Application
+class Create extends Application
 {
     function __construct()
     {
@@ -30,7 +30,7 @@ class CreateEvent extends Application
         var_dump($this->form_validation->run());
         if ($this->form_validation->run() == FALSE)
 		{
-            redirect('createevent');
+            redirect('create');
 		}
 		else
 		{
@@ -38,14 +38,32 @@ class CreateEvent extends Application
 
             $record->user_id = 0;
             $record->name = set_value('eventname');
-            $record->image = set_value('image');
             $record->start_date = set_value('startdate');
             $record->end_date = set_value('enddate');
             $record->description = set_value('eventdescription');
+            $imageName = set_value('image');
+            $record->image = $imageName;
 
             $this->events->add_event($record);
+            uploadImage($imageName);
 
 	        redirect('calendar');
 		}
+    }
+
+    public function uploadImage($imageName)
+    {
+        $config['upload_path']   = './Assets/img/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size']      = 0;
+        $config['max_width']     = 0;
+        $config['max_height']    = 0;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload($imageName))
+        {
+            redirect('create');
+        }
     }
 }
