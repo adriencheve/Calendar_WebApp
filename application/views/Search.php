@@ -2,7 +2,7 @@
 
 <div id="container">
 
-<form method="post"> <!-- missing the action="??" part -->
+<form action = "search/getResults" method="post">
 
     <legend> Search Event </legend>
 
