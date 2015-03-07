@@ -16,16 +16,16 @@ class Create extends Application
     function index()
     {
         $this->data['title'] = 'Create Event';
-        $this->data['pagebody'] = 'createevent';
+        $this->data['pagebody'] = 'create';
         $this->render();
     }
 
     function validation()
     {
-        $this->form_validation->set_rules('eventname', 'Event Name', 'required');
-        $this->form_validation->set_rules('eventdescription', 'Description', 'required');
-        $this->form_validation->set_rules('startdate', 'Start Date', 'required');
-        $this->form_validation->set_rules('enddate', 'End Date', 'required');
+        $this->form_validation->set_rules('eventName', 'Event Name', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        $this->form_validation->set_rules('startingDate', 'Start Date', 'required');
+        $this->form_validation->set_rules('endDate', 'End Date', 'required');
 
         var_dump($this->form_validation->run());
         if ($this->form_validation->run() == FALSE)
@@ -37,23 +37,23 @@ class Create extends Application
             $record = $this->events->create();
 
             $record->user_id = 0;
-            $record->name = set_value('eventname');
-            $record->start_date = set_value('startdate');
-            $record->end_date = set_value('enddate');
-            $record->description = set_value('eventdescription');
-            $imageName = set_value('image');
-            $record->image = $imageName;
+            $record->name = set_value('eventName');
+            $record->start_date = set_value('startingDate');
+            $record->end_date = set_value('endDate');
+            $record->description = set_value('description');
+            $record->image = $this->uploadImage('eventDescription');
 
             $this->events->add_event($record);
-            uploadImage($imageName);
 
-	        redirect('calendar');
+	        redirect('monthly');
 		}
     }
 
     public function uploadImage($imageName)
     {
-        $config['upload_path']   = './Assets/img/';
+        $path = './Assets/img/';
+
+        $config['upload_path']   = $path;
         $config['allowed_types'] = 'gif|jpg|png';
         $config['max_size']      = 0;
         $config['max_width']     = 0;
@@ -63,7 +63,11 @@ class Create extends Application
 
         if (!$this->upload->do_upload($imageName))
         {
-            redirect('create');
+            return $path . 'placeholder.jpg';
         }
+
+        $fileRecord = $this->upload->data();
+
+        return $path . $fileRecord['file_name'];
     }
 }
