@@ -34,7 +34,8 @@ class Login extends Application
             $name = $record->fname . ' ' . $record->lname;
 
             //$this->load->view('success_login', array('flname' => $name));
-            $this->load->view('monthly', 0);
+            //$this->load->view('monthly', 0);
+            redirect('monthly/index/0');
         }
         else
         {
