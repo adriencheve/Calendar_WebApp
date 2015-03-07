@@ -1,31 +1,44 @@
 
+
 <div id="container">
 
-<form method="post" action="/register/validation">  <!-- missing the action="??" part -->
-
-    <legend> Register Form </legend>
+<form method="post">  <!-- missing the action="??" part -->
 
     <fieldset>
-        User Name:
-        <input type="text" name="username">
-        <br>
-
-        Name:
-        <input type="text" name="fullname">
-        <br>
-
-        Email:
+        <legend> Register Form </legend>
+        
+            <div class="descriptionTag">
+                User Name: 
+            </div>
+            <input type="text" name="username">
+   
+        <br/>
+        
+        <div class="descriptionTag">
+            Email:
+        </div>
         <input type="email" name="email">
-        <br>
 
-        Password:
+        <br/>
+        
+        <div class="descriptionTag">
+            Password:
+        </div>
         <input type="password" name="password1">
-        <br>
 
-        Confirm Password:
+        <br/>
+        
+        <div class="descriptionTag">
+            Confirm Password:
+        </div>
         <input type="password" name="password2">
-        <br>
 
-        <input type="submit" value="Login">
+        <div class="submitButton">
+            <input type="submit" class="SButton" value="Register">
+        </div>
     </fieldset>
 </div>
+
+
+
+

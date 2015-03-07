@@ -1,2 +1,7 @@
-register DONE
-login    DONE
+the views that are updated to their respective css:
+
+	create
+	edit
+	login
+	register
+	search
