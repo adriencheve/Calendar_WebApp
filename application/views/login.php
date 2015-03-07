@@ -1,19 +1,26 @@
-
 <div id="container">
 
-<form method="post" action="/login/validation">  <!-- missing the action="??" part -->
-
-    <legend> Login Form </legend>
+<form method="post">  <!-- missing the action="??" part -->
 
     <fieldset>
-        User Name:
+        <legend> Login Form </legend>
+        
+        <div class="descriptionTag">
+            User Name: 
+        </div>
         <input type="text" name="username">
-        <br>
-
-        Password:
+   
+        <br/>
+        
+        <div class="descriptionTag">
+            Password:
+        </div>
         <input type="password" name="password">
-        <br>
 
-        <input type="submit" value="Login">
+        <br/>
+
+        <div class="submitButton">
+            <input type="submit" class="SButton" value="Login">
+        </div>
     </fieldset>
 </div>

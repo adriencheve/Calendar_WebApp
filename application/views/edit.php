@@ -1,33 +1,47 @@
 <div id="container">
 
-<form method="post"> <!-- missing the action="??" part -->
-
-    <legend> Edit Event </legend>
+<form method="post" id="theForm"> <!-- missing the action="??" part -->
 
     <fieldset>
-        Event Name: 
+        <legend> Edit Event </legend>
+        
+        <div class="descriptionTag">
+            Event Name: 
+        </div>
         <input type="text" name="eventName">
-        <br>
+        <br/>
 
-        Description: 
-        <input type="text" name="eventDescription">
-        <br>
         
-        Image:
-        <input type="file" accept="image/*" name="eventDescription">
-        <br>
+        <div class="descriptionTag">
+            Description:
+        </div> 
+        <textarea class="formDescription" name="description" form="theForm"></textarea>
+        <br/>
         
-        Starting Date:
+        <div class="descriptionTag">
+            Image:
+        </div>
+        <input type="file" class="image" accept="image/*" name="eventDescription">
+        <br/>
+        
+        <div class="descriptionTag">
+            Starting Date:
+        </div>
         <input type="date" name="startingDate">
-        <br>
+        <br/>
         
-        End Date: 
-        <input type="text" name="endDate">
-        <br>
+        <div class="descriptionTag">
+            End Date:
+        </div> 
+        <input type="date" name="endDate">
+        <br/>
 
-        <input type="submit" value="edit" name="editEvent">
-        <input type="submit" value="delete event" name="deleteEvent">
-        <!-- onclick for delete event should show a confirmation pop up-->
-        <input type="reset" value="reset">
+        <div class="submitButton">
+            <input type="submit" class="SButton" value="Edit" name="editEvent">
+            <input type="submit" class="SButtonRight" value="Delete Event" name="deleteEvent">
+            <!-- onclick for delete event should show a confirmation pop up-->
+            <input type="reset" class="SButtonRight" value="Reset">
+        </div>
+        
     </fieldset>
 </div>
