@@ -1,0 +1,163 @@
+body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    text-align:center;
+    background-image: url("../img/background/Melamine-wood-003.png");
+    /*border:1px solid red;*/
+}
+
+form {
+    margin-top: 250px;
+    /*border: 1px solid green;*/
+}
+
+fieldset {
+    background-image: url("../img/background/Melamine-wood-004.png");
+    padding-top: 25px;
+    width: 500px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+    box-shadow: 5px 5px 5px #363636;
+}
+
+legend {
+    padding: 5px;
+    border: 2px;
+    border-style: solid;
+    background-image: url("../img/background/Melamine-wood-004.png");
+    color:white;
+    box-shadow: 5px 5px 100px #888888;
+    border-radius: 17px;
+}
+
+/* Label for the input */          
+.descriptionTag {
+    float: left;
+    width: 30%;
+    margin-right: 10px;
+    text-align:right;
+    color:white;
+}
+/* End of label input*/
+
+/* This is for the input that the form accepts*/
+input {
+   margin-bottom: 10px;
+   box-shadow: 1px 2px 5px #888888;
+   width: 50%;
+}
+
+.formDescription {
+   margin-bottom: 10px;
+   box-shadow: 1px 2px 5px #888888;
+   width: 50%;
+   height: 100px;
+   font-family: Comic Sans MS;
+   font-style: italic;
+   font-weight: bold;
+}
+
+.description {
+    height: 80px;
+}
+
+.image {
+    background-color: white;
+}
+/* End of input form*/
+
+/* Format for the buttons used on the form */
+.SButton {
+    width: 100px;
+}
+
+.SButtonRight {
+    width: 100px;
+    margin-left: 20px;
+}
+     /* div that contains the buttons */
+.submitButton {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Buttons on the form end */
+
+
+/* The navigation for the calendar */
+
+.fullCalendar {
+    margin-top: 10%;
+}
+
+.tableNavigation {
+    margin: 0 auto;
+    background-image: url("../img/background/Melamine-wood-006.png");
+    max-width: 854px;
+    min-width: 580px;
+    height: 90px;
+    /*border: 1px solid green;*/
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.navMonth {
+    width: 10%;
+    text-align:center;
+}
+
+
+p.theMonth {
+    display:inline-block;
+    font-size: 200%;
+    /*padding:5px;*/
+    color:white;
+    width:70%;
+    min-width: 100px;
+}
+/*
+.topLeft {
+    border-top-left-radius: 5px;
+}
+
+.topRight {
+    border-top-right-radius: 5px;
+}*/
+
+
+th{
+    width: 120px;
+    height: 40px;
+    min-height:30px;
+    min-width: 80px;
+    background-color: #3083FF;
+    color:white;
+
+    /*border: 1px solid yellow;*/
+}
+
+td {
+   height: 80px; 
+   /*border: 1px solid black;*/
+}
+
+.event {
+    height: 80px; 
+    /*background-image*/
+}
+
+table {
+    min-height: 280px;
+    border-collapse: collapse;
+    background-color:white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #888888;
+    background-image: url("../img/background/Melamine-wood-006.png");
+    color: white;
+}
+
+   
