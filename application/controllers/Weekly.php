@@ -8,12 +8,12 @@ class Weekly extends Application {
         $this->data['title'] = 'Calendar - Weekly';
 		$this->data['pagebody'] = 'weekly';
 
-		generateCalendar($id);
+		$this->generateCalendar($id);
 	}
 
     public function generateCalendar($id)
     {
-        $openCell = false;
+        $openCell = true;
         $openList = false;
         $weekOne = "";
         $weekTwo = "";
@@ -21,66 +21,112 @@ class Weekly extends Application {
         $weekFour = "";
         $weekFive = "";
 
-        if ($id == 0)
-            $events = $this->events->all();
-        else
-            $events = $this->events->some("user_id", $id);
+        $days = 1;
 
-        // ----------
-        //  Week One
-        // ----------
+        $this->data['month'] = "March";
 
-        ksort($events, "start_date"); // sort the events by date
-        $date = date("d");
-        $eDay = 1; // number day of the next event
-        $bDay = 1; // number day of the box being filled
+        $events = $this->events->events_date_order($id);
 
-        for ($index = 0; $index < count($events); ) // do not increment index automatically
+        if (count($events) < 1)
         {
-            if (($eDay > 7) || ($bDay > 7)) break; // calendar is 7 x 5 boxes
-            if ($eDay > $bDay) // if the event isn't in this box, skip this box
-            {
-                $bDay++;
-                $weekOne = $weekOne . "<td></td>";
-                continue;
-            }
-
-            if ($event->start_date != $date) // multiple events on the same day
-            {
-                if ($openList == true)
-                {
-                    $weekOne = $weekOne . "</ul>";
-                    $openList = false;
-                }
-                if ($openCell == true)
-                {
-                    $weekOne = $weekOne . "</td>";
-                    $openCell = false;
-                }
-
-                $date = $events[$index]->start_date;
-                $eDay = date("d", strtotime($date));
-                $bDay++;
-                continue;
-            }
-
-            if ($openCell == false)
-            {
-                $weekOne = $weekOne . "<td>"
-                $openCell = true;
-            }
-            if ($openList == false)
-            {
-                $weekOne = $weekOne . "<ul>"
-                $openList = true;
-            }
-
-            $weekOne = $weekOne . "<li>" . $events[$index]->name . "</li>";
-            $index++;
+            $this->fillWeeks(1);
+            $this->render();
+            return 0;
         }
-        if ($openCell == true)
-            $weekOne = $weekOne . "</td>";
 
+        $p = array
+        (
+            "week" => "week",
+            "openCell" => true,
+            "openList" => false,
+            "eDay" => 1,
+            "bDay" => 1,
+            "eDayMax" => 7,
+            "bDayMax" => 7,
+            "index" => 0
+        );
+
+        $p['index'] = $this->generateWeek($p, $events);
         $this->render();
     }
+
+    private function generateWeek($p, $events)
+    {
+        $week = $p['bDay'] . "";
+        $date = date("ymd");
+        $days = 1;
+
+        while ($p['index'] < count($events)) // do not increment index automatically
+        {
+            if (($p['eDay'] > $p['eDayMax']) || ($p['bDay'] > $p['eDayMax'])) break; // calendar is 7 x 5 boxes
+
+            if ($p['eDay'] > $p['bDay']) // if the event isn't in this box, skip this box
+            {
+                if ($p['openCell'] == true)
+                {
+                    $week = $week . "</td>";
+                    $p['openCell'] = false;
+                }
+                else $week = $week . "<td>" . $p['bDay'] . "</td>";
+
+                $p['bDay']++;
+                $days++;
+                continue;
+            }
+            else if ($p['bDay'] > $p['eDay']) break;
+
+            if (date("ymd", strtotime($events[$p['index']]->start_date)) != date("ymd", strtotime($date))) // multiple events on the same day
+            {
+                if ($p['openList'] == true)
+                {
+                    $week = $week . "</ul>";
+                    $p['openList'] = false;
+                }
+                if ($p['openCell'] == true)
+                {
+                    $week = $week . "</td>";
+                    $p['openCell'] = false;
+                    $p['bDay']++;
+                    $days++;
+                }
+
+                $date = $events[$p['index']]->start_date;
+                $p['eDay'] = (int)date("d", strtotime($date));
+                continue;
+            }
+
+            if ($p['openCell'] == false)
+            {
+                $week = $week . "<td>" . $p['bDay'];
+                $p['openCell'] = true;
+            }
+            if ($p['openList'] == false)
+            {
+                $week = $week . "<ul>";
+                $p['openList'] = true;
+            }
+
+            $week = $week . "<li>" . $events[$p['index']]->name . "</li>";
+            $p['index']++;
+        }
+
+        if ($p['openCell'] == true)
+        {
+            $week = $week . "</td>";
+            $p['bDay']++;
+            $days++;
+        }
+
+        while ($days <= 7)
+        {
+            $week = $week . "<td>" . $p['bDay'] . "</td>";
+            $p['bDay']++;
+            $days++;
+        }
+
+        $this->data[$p['week']] = $week;
+
+        return $p['index'];
+    }
 }
+

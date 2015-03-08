@@ -12,7 +12,7 @@
             <button type="button" class="navMonth previous" onclick="alert('PrevMonth')">
                     Previous
             </button>
-            <p class="theMonth"> {month} - {week} </p>
+            <p class="theMonth"> {month} - {weekName} </p>
 
             <button type="button" class="navMonth next" onclick="alert('NextMonth')">
                     Next
@@ -30,7 +30,7 @@
                 <th class="topRight">Sat</th>
             </tr>
             <tr>
-                <td>{weekOne}</td>
+                <td>{week}</td>
             </tr>
         </table>
     </div>
