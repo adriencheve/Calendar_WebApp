@@ -18,8 +18,6 @@ class Monthly extends Application
 
     private function generateCalendar($id)
     {
-
-        $foo = 0;
         $openCell = true;
         $openList = false;
         $weekOne = "";
@@ -30,7 +28,7 @@ class Monthly extends Application
 
         $days = 1;
 
-        $this->data['month'] = "January";
+        $this->data['month'] = "March";
 
         $events = $this->events->events_date_order($id);
 
@@ -46,7 +44,6 @@ class Monthly extends Application
             "week" => "weekOne",
             "openCell" => true,
             "openList" => false,
-            "test" => 0,
             "eDay" => 1,
             "bDay" => 1,
             "eDayMax" => 7,
@@ -54,7 +51,7 @@ class Monthly extends Application
             "index" => 0
         );
 
-        $this->generateWeek($p, $events);
+        $p['index'] = $this->generateWeek($p, $events);
 
         if ($p['index'] >= count($events))
         {
@@ -64,14 +61,12 @@ class Monthly extends Application
         }
 
         $p['week'] = "weekTwo";
-        $p['openCell'] = false;
-        $p['openList'] = false;
         $p['eDay'] = 8;
         $p['bDay'] = 8;
         $p['eDayMax'] = 14;
         $p['bDayMax'] = 14;
 
-        $this->generateWeek($p, $events);
+        $p['index'] = $this->generateWeek($p, $events);
 
         if ($p['index'] >= count($events))
         {
@@ -81,14 +76,12 @@ class Monthly extends Application
         }
 
         $p['week'] = "weekThree";
-        $p['openCell'] = false;
-        $p['openList'] = false;
         $p['eDay'] = 15;
         $p['bDay'] = 15;
         $p['eDayMax'] = 21;
         $p['bDayMax'] = 21;
 
-        $this->generateWeek($p, $events);
+        $p['index'] = $this->generateWeek($p, $events);
 
         if ($p['index'] >= count($events))
         {
@@ -98,14 +91,12 @@ class Monthly extends Application
         }
 
         $p['week'] = "weekFour";
-        $p['openCell'] = false;
-        $p['openList'] = false;
         $p['eDay'] = 22;
         $p['bDay'] = 22;
         $p['eDayMax'] = 28;
         $p['bDayMax'] = 28;
 
-        $this->generateWeek($p, $events);
+        $p['index'] = $this->generateWeek($p, $events);
 
         if ($p['index'] >= count($events))
         {
@@ -115,41 +106,37 @@ class Monthly extends Application
         }
 
         $p['week'] = "weekFive";
-        $p['openCell'] = false;
-        $p['openList'] = false;
         $p['eDay'] = 29;
         $p['bDay'] = 29;
         $p['eDayMax'] = 35;
         $p['bDayMax'] = 35;
 
-        $this->generateWeek($p, $events);
+        $p['index'] = $this->generateWeek($p, $events);
 
         $this->render();
     }
 
     private function generateWeek($p, $events)
     {
-        $week = "";
+        $week = $p['bDay'] . "";
         $date = date("ymd");
         $days = 1;
-        $var = 0;
 
         while ($p['index'] < count($events)) // do not increment index automatically
         {
             if (($p['eDay'] > $p['eDayMax']) || ($p['bDay'] > $p['eDayMax'])) break; // calendar is 7 x 5 boxes
+
             if ($p['eDay'] > $p['bDay']) // if the event isn't in this box, skip this box
             {
-                $p['bDay']++;
                 if ($p['openCell'] == true)
                 {
                     $week = $week . "</td>";
                     $p['openCell'] = false;
                 }
-                else $week = $week . "<td></td>";
+                else $week = $week . "<td>" . $p['bDay'] . "</td>";
 
+                $p['bDay']++;
                 $days++;
-                $var++;
-                var_dump($var);
                 continue;
             }
             else if ($p['bDay'] > $p['eDay']) break;
@@ -165,18 +152,18 @@ class Monthly extends Application
                 {
                     $week = $week . "</td>";
                     $p['openCell'] = false;
+                    $p['bDay']++;
+                    $days++;
                 }
 
                 $date = $events[$p['index']]->start_date;
                 $p['eDay'] = (int)date("d", strtotime($date));
-                $p['bDay']++;
-
                 continue;
             }
 
             if ($p['openCell'] == false)
             {
-                $week = $week . "<td>";
+                $week = $week . "<td>" . $p['bDay'];
                 $p['openCell'] = true;
             }
             if ($p['openList'] == false)
@@ -187,22 +174,25 @@ class Monthly extends Application
 
             $week = $week . "<li>" . $events[$p['index']]->name . "</li>";
             $p['index']++;
-            $days++;
         }
 
         if ($p['openCell'] == true)
-            $week = $week . "</td>";
-
-        while ($days < 7)
         {
-            $week = $week . "<td></td>";
+            $week = $week . "</td>";
+            $p['bDay']++;
+            $days++;
+        }
+
+        while ($days <= 7)
+        {
+            $week = $week . "<td>" . $p['bDay'] . "</td>";
+            $p['bDay']++;
             $days++;
         }
 
         $this->data[$p['week']] = $week;
 
-        //var_dump($p);
-        var_dump("<br>");
+        return $p['index'];
     }
 
     private function fillWeeks($weekNum)
@@ -210,15 +200,25 @@ class Monthly extends Application
         switch($weekNum)
         {
             case 1:
-                $this->data['weekOne'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+                $d = 1;
+                $this->data['weekOne'] =  $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . 
+                    "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td>";
             case 2:
-                $this->data['weekTwo'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+                $d = 8;
+                $this->data['weekTwo'] = $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ .
+                    "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td>";
             case 3:
-                $this->data['weekThree'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+                $d = 15;
+                $this->data['weekThree'] = $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ .
+                     "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td>";
             case 4:
-                $this->data['weekFour'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+                $d = 22;
+                $this->data['weekFour'] = $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ .
+                     "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ . "</td>";
             case 5:
-                $this->data['weekFive'] = "</td><td></td><td></td><td></td><td></td><td></td><td></td>";
+                $d = 29;
+                $this->data['weekFive'] = $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ .
+                    "</td><td>" . "</td><td>" . "</td><td>" . "</td><td>" . "</td>";
                 break;
         }
     }
