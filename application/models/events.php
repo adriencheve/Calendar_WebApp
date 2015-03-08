@@ -12,6 +12,7 @@ class Events extends MY_Model
 	public function add_event($record)
 	{
 		$record->id = $this->highest() + 1;
+        $record->user_id = $this->session->cookie->userdata('user_id');
 		$record->created = date('Y-m-d');
 		$record->modified = date('Y-m-d');
 
