@@ -1,17 +1,18 @@
+
 <div id="container">
 
-<form method="post">  <!-- missing the action="??" part -->
+<form method="post" action="/login/validation">  <!-- missing the action="??" part -->
 
     <fieldset>
         <legend> Login Form </legend>
-        
+
         <div class="descriptionTag">
-            User Name: 
+            User Name:
         </div>
         <input type="text" name="username">
-   
+
         <br/>
-        
+
         <div class="descriptionTag">
             Password:
         </div>

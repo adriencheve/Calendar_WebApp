@@ -27,19 +27,17 @@ class Login extends Application
         $record['username'] = set_value('username');
         $record['password'] = set_value('password');
 
-        $record = $this->users->login($record);
+        $query = $this->users->login($record);
 
-        if($record != NULL)
+        if(!$query)
         {
-            $name = $record->fname . ' ' . $record->lname;
-
-            //$this->load->view('success_login', array('flname' => $name));
-            //$this->load->view('monthly', 0);
-            redirect('monthly/index/0');
+            redirect('register');
         }
         else
         {
-            redirect('register');
+            $this->session->cookie->set_userdata($query);
+
+            redirect('monthly');
         }
     }
 }

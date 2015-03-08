@@ -24,15 +24,15 @@ class Users extends MY_Model
 
     function login($record)
     {
-        $query = $this->db->get_where('users', array('username' => $record['username']))->result();
-        
-        if(sizeof($query) > 0 && $query[0]->pword == $record['password'])
+        $query = $this->db->get_where('users', array('username' => $record['username']))->result_array();
+
+        if(sizeof($query) > 0 && $query[0]['pword'] == $record['password'])
         {
             return $query[0];
         }
         else
         {
-            return NULL;
+            return false;
         }
     }
 }
