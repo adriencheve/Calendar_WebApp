@@ -46,6 +46,7 @@
             </tr>
         </table>
         <div>
+            {create}
             {weekly}
         </div>
     </div>

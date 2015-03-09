@@ -34,5 +34,9 @@
             </tr>
         </table>
     </div>
+    <div>
+        {create}
+        {monthly}
+    </div>
 </body>
 </html>
