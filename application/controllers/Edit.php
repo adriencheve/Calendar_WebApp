@@ -9,7 +9,7 @@ class Edit extends Application
         parent::__construct();
     }
 
-    function index()
+    function index($id)
     {
         $this->data['title'] = 'Edit Event';
         $this->data['pagebody'] = 'edit';

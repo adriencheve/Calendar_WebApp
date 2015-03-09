@@ -111,7 +111,7 @@ input {
 }
 
 
-p.theMonth {
+.theMonth {
     display:inline-block;
     font-size: 200%;
     /*padding:5px;*/
@@ -141,7 +141,8 @@ th{
 }
 
 td {
-   height: 80px; 
+   height: 80px;
+   text-align: left;
    /*border: 1px solid black;*/
 }
 

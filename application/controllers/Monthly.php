@@ -12,23 +12,16 @@ class Monthly extends Application
 	{
         $this->data['title'] = "Calendar - Monthly";
 		$this->data['pagebody'] = 'monthly';
+        $this->data['weekly'] = '<a href="' . base_url('weekly/index/' . $id) . '">Weekly View</a>';
+
+        //if (($id = $this->session->cookie->userdata('user_id')) == null) $id = 1;
 
         $this->generateCalendar($id);
 	}
 
     private function generateCalendar($id)
     {
-        $openCell = true;
-        $openList = false;
-        $weekOne = "";
-        $weekTwo = "";
-        $weekThree = "";
-        $weekFour = "";
-        $weekFive = "";
-
-        $days = 1;
-
-        $this->data['month'] = "March";
+        $this->data['month'] = $this->getMonth((int)date("m"));
 
         $events = $this->events->events_date_order($id);
 
@@ -172,7 +165,7 @@ class Monthly extends Application
                 $p['openList'] = true;
             }
 
-            $week = $week . '<li class="event"><a href="edit/' . $events[$p['index']]->id . '"' . $events[$p['index']]->name . "</a></li>";
+            $week = $week . '<li class="event"><a href="' . base_url('edit/index/' . $events[$p['index']]->id) . '">' . $events[$p['index']]->name . "</a></li>";
             $p['index']++;
         }
 
@@ -219,6 +212,39 @@ class Monthly extends Application
                 $d = 29;
                 $this->data['weekFive'] = $d++ . "</td><td>" . $d++ . "</td><td>" . $d++ .
                     "</td><td>" . "</td><td>" . "</td><td>" . "</td><td>" . "</td>";
+                break;
+        }
+    }
+
+    private function getMonth($num)
+    {
+        switch ($num)
+        {
+            case 1:
+                return "January";
+            case 2:
+                return "February";
+            case 3:
+                return "March";
+            case 4:
+                return "April";
+            case 5:
+                return "May";
+            case 6:
+                return "June";
+            case 7:
+                return "July";
+            case 8:
+                return "August";
+            case 9:
+                return "September";
+            case 10:
+                return "October";
+            case 11:
+                return "November";
+            case 12:
+                return "December";
+            default:
                 break;
         }
     }

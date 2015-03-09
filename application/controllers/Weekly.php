@@ -8,22 +8,15 @@ class Weekly extends Application {
         $this->data['title'] = 'Calendar - Weekly';
 		$this->data['pagebody'] = 'weekly';
 
+        // if (($id = $this->session->cookie->userdata('user_id')) == null) $id = 1;
+
 		$this->generateCalendar($id);
 	}
 
     public function generateCalendar($id)
     {
-        $openCell = true;
-        $openList = false;
-        $weekOne = "";
-        $weekTwo = "";
-        $weekThree = "";
-        $weekFour = "";
-        $weekFive = "";
-
-        $days = 1;
-
-        $this->data['month'] = "March";
+        $this->data['month'] = $this->getMonth((int)date("m"));
+        $this->data['weekName'] = "1 to 7";
 
         $events = $this->events->events_date_order($id);
 
@@ -106,7 +99,7 @@ class Weekly extends Application {
                 $p['openList'] = true;
             }
 
-            $week = $week . "<li>" . $events[$p['index']]->name . "</li>";
+            $week = $week . '<li class="event"><a href="' . base_url('edit/index/' . $events[$p['index']]->id) . '">' . $events[$p['index']]->name . "</a></li>";
             $p['index']++;
         }
 
@@ -127,6 +120,39 @@ class Weekly extends Application {
         $this->data[$p['week']] = $week;
 
         return $p['index'];
+    }
+
+    private function getMonth($num)
+    {
+        switch ($num)
+        {
+            case 1:
+                return "January";
+            case 2:
+                return "February";
+            case 3:
+                return "March";
+            case 4:
+                return "April";
+            case 5:
+                return "May";
+            case 6:
+                return "June";
+            case 7:
+                return "July";
+            case 8:
+                return "August";
+            case 9:
+                return "September";
+            case 10:
+                return "October";
+            case 11:
+                return "November";
+            case 12:
+                return "December";
+            default:
+                break;
+        }
     }
 }
 

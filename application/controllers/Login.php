@@ -37,7 +37,7 @@ class Login extends Application
         {
             $this->session->cookie->set_userdata($query);
 
-            redirect('monthly');
+            redirect('monthly/index/' . $query);
         }
     }
 }

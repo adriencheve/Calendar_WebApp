@@ -45,6 +45,9 @@
                 <td>{weekFive}
             </tr>
         </table>
+        <div>
+            {weekly}
+        </div>
     </div>
 </body>
 </html>
