@@ -3,8 +3,7 @@
 /**
  * The Login controller. Allows the user to log into this application.
  *
- * @programmer Julian Brandrick
- * @designer James Parry
+ * @author Julian Brandrick
  */
 class Login extends Application
 {
@@ -13,6 +12,15 @@ class Login extends Application
         parent::__construct();
     }
 
+    /*
+     * Function: index()
+     *
+     * Params: void
+     *
+     * Notes:
+     *  Sets the title and body of the login page.
+     *  Renders the page.
+     */
     function index()
     {
         $this->data['title'] = 'Login';
@@ -20,6 +28,21 @@ class Login extends Application
         $this->render();
     }
 
+    /*
+     * Function: validation()
+     *
+     * Params: void
+     *
+     * Notes:
+     *  Pulls the username and password entered by the user and checks if they
+     *  are valid. If they are valid, load the monthly page, else load the
+     *  register page.
+     *
+     * Disclaimer:
+     * 	We were not able to make session data work with all members.
+     * 	Currently this website keeps persistent data by passing it through URI
+     * 	segments.
+     */
     function validation()
     {
         $record = array();
