@@ -1,6 +1,6 @@
 <div id="container">
 
-<form method="post">  <!-- missing the action="??" part -->
+<form action="search/getResults" method="post">
 
     <fieldset>
         <legend> Search Event </legend>
