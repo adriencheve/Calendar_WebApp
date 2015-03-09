@@ -30,19 +30,19 @@
                 <th class="topRight">Sat</th>
             </tr>
             <tr>
-                <td>{weekOne}</td>
+                <td>{weekOne}
             </tr>
             <tr>
-                <td>{weekTwo}</td>
+                <td>{weekTwo}
             </tr>
             <tr>
-                <td class="event">{weekThree}</td>
+                <td>{weekThree}
             </tr>
             <tr>
-                <td>{weekFour}</td>
+                <td>{weekFour}
             </tr>
             <tr>
-                <td>{weekFive}</td>
+                <td>{weekFive}
             </tr>
         </table>
     </div>
