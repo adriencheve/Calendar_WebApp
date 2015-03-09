@@ -13,7 +13,7 @@ class Create extends Application
         parent::__construct();
     }
 
-    function index()
+    function index($id)
     {
         $this->data['title'] = 'Create Event';
         $this->data['pagebody'] = 'create';

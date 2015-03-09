@@ -35,9 +35,9 @@ class Login extends Application
         }
         else
         {
-            $this->session->cookie->set_userdata($query);
+            //$this->session->cookie->set_userdata($query);
 
-            redirect('monthly/index/' . $query);
+            redirect('monthly/index/' . $query['user_id']);
         }
     }
 }
