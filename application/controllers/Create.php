@@ -20,6 +20,16 @@ class Create extends Application
         $this->render();
     }
 
+    /*
+     * Function: validation()
+     *
+     * Params: void
+     *
+     * Notes:
+     *  Pulls the event information entered by the user and validates it. If it
+     *  is valid, enter it into the database and load the monthly page. Else
+     *  reload the current page.
+     */
     function validation()
     {
         $this->form_validation->set_rules('eventName', 'Event Name', 'required');
@@ -27,7 +37,6 @@ class Create extends Application
         $this->form_validation->set_rules('startingDate', 'Start Date', 'required');
         $this->form_validation->set_rules('endDate', 'End Date', 'required');
 
-        var_dump($this->form_validation->run());
         if ($this->form_validation->run() == FALSE)
 		{
             redirect('create');
@@ -49,6 +58,17 @@ class Create extends Application
 		}
     }
 
+    /*
+     * Function: uploadImage($imageName)
+     *
+     * Params: $imageName
+     * 	The name of the uploaded image.
+     *
+     * Notes:
+     *  Pulls the username and password entered by the user and checks if they
+     *  are valid. If they are valid, load the monthly page, else load the
+     *  register page.
+     */
     public function uploadImage($imageName)
     {
         $path = './Assets/img/';
