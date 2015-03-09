@@ -172,7 +172,7 @@ class Monthly extends Application
                 $p['openList'] = true;
             }
 
-            $week = $week . "<li>" . $events[$p['index']]->name . "</li>";
+            $week = $week . '<li class="event"><a href="edit/' . $events[$p['index']]->id . '"' . $events[$p['index']]->name . "</a></li>";
             $p['index']++;
         }
 
