@@ -3,8 +3,7 @@
 /**
  * The Register controller. Allows the user to register for this application.
  *
- * @programmer Julian Brandrick
- * @designer James Parry
+ * @author Julian Brandrick
  */
 
 class Register extends Application
@@ -21,6 +20,16 @@ class Register extends Application
         $this->render();
     }
 
+    /*
+     * Function: validation()
+     *
+     * Params: void
+     *
+     * Notes:
+     *  Pulls the information entered by the user and validates them. If it is
+     *  valid, add user to database and load the login page. Else reload the
+     *  current page.
+     */
     function validation()
     {
         $record = $this->users->create();

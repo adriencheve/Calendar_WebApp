@@ -1,16 +1,21 @@
-
-
 <div id="container">
 
-<form method="post" action="/register/validation">  <!-- missing the action="??" part -->
+<form method="post" action="/register/validation">
 
     <fieldset>
         <legend> Register Form </legend>
 
-            <div class="descriptionTag">
-                User Name:
-            </div>
-            <input type="text" name="username">
+        <div class="descriptionTag">
+            User Name:
+        </div>
+        <input type="text" name="username">
+
+        <br/>
+
+        <div class="descriptionTag">
+            Full Name:
+        </div>
+        <input type="text" name="fullname">
 
         <br/>
 
